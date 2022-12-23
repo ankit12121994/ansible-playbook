@@ -1,0 +1,44 @@
+- hosts: webservers
+  remote_user: ubuntu
+  become_user: root
+  become_method: sudo
+  become: yes
+
+
+  vars:
+    package: apache2
+    service_name: apache2
+    destination: /var/www/html
+    index_file: index.html
+
+  tasks:
+    - name: install apache everywhere
+      apt:
+       name: "{{package}}"
+       update_cache: yes
+       state: latest
+
+
+    - name: enable the apache service
+      service:
+         name: "{{service_name}}"
+         enabled: true
+         state: started
+
+    - name: copy the files from local to remote
+      copy:
+        src: "/etc/ansible/files/{{index_file}}"
+        dest: "{{destination}}/{{index_file}}"
+
+    - name: copy somesite.conf from local to remote
+      copy:
+        src: /etc/ansible/files/somesite.conf
+        dest: /etc/apache2/sites-available/somesite.conf
+      notify: Restart Apache
+
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: "{{service_name}}"
+        state: restarted

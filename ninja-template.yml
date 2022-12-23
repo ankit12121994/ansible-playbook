@@ -1,0 +1,14 @@
+- hosts: all
+  become_user: root
+  become_method: sudo
+  become: yes
+
+  vars:
+    package_name: ntp
+
+
+  tasks:
+    - name: generate a template config and send it to remote servers
+      template:
+        src: something.j2
+        dest: /opt/result.txt

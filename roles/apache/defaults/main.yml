@@ -1,0 +1,2 @@
+    destination: /var/www/html
+    index_file: index.html

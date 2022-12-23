@@ -1,0 +1,16 @@
+- hosts: all
+  become_user: root
+  become_method: sudo
+  become: yes
+
+
+  tasks:
+    - name: create a file first
+      command: touch /home/file6.txt
+      args:
+        chdir: /home/
+        
+    - name: print the list of content in one file
+      command: ls -l > /home/file6.txt
+      args:
+        chdir: /etc/

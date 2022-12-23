@@ -1,0 +1,21 @@
+The os family of this server is : {{ansible_os_family}}
+
+its ip address is {{ansible_all_ipv4_addresses}}
+
+its total memory is {{ansible_memtotal_mb}}
+
+and version of python installed in this server is {{ansible_python_version}}
+
+package name is {{package_name}}
+
+{% if ansible_memtotal_mb >=900 %}
+Its a huge huge memory
+{% else %}
+your memory is too low
+{% endif %}
+
+{% if ansible_os_family == "Debian" %}
+Its debianwa
+{% else %}
+Its redahatta
+{% endif %}

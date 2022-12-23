@@ -1,0 +1,18 @@
+    - name: install apache on redhat servers
+      yum:
+       name: "{{package}}"
+       update_cache: yes
+       state: latest
+
+
+    - name: enable the apache service
+      service:
+         name: "{{service_name}}"
+         enabled: true
+         state: started
+
+    - name: copy the files from local to remote
+      copy:
+        src: "{{index_file}}"
+        dest: "{{destination}}/{{index_file}}"
+      notify: Restart Apache

@@ -1,0 +1,24 @@
+- hosts: webservers
+  remote_user: ubuntu
+  become_user: root
+  become_method: sudo
+  become: yes
+
+  tasks:
+    - name: install apache everywhere
+      apt:
+       name: apache2
+       update_cache: yes
+       state: latest
+
+
+    - name: enable the apache service
+      service:
+         name: apache2
+         enabled: true
+         state: started
+
+    - name: copy the files from local to remote   
+      copy:
+        src: /etc/ansible/files/index.html
+        dest: /var/www/html/index.html

@@ -1,0 +1,31 @@
+- hosts: all
+  become_user: root
+  become_method: sudo
+  become: yes
+
+  tasks: 
+   - name: install these softwares on ubuntu server
+     apt:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+     when: ansible_distribution=="ubuntu"
+     loop:
+       - wget
+       - ntp
+       - git
+       - zip
+       - unzip
+
+   - name: install these softwares on redhat server
+     yum:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+     when: ansible_distribution=="RedHat"
+     loop:
+       - wget
+       - chrony
+       - git
+       - zip
+       - unzip
